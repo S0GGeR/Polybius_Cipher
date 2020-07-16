@@ -1,102 +1,109 @@
 def polybius_cipher(square, word):
     for i in range(len(square)):
-        for j in range(len(square[ i ])):
-            print(square[ i ][ j ], end=' ')
+        for j in range(len(square[i])):
+            print(square[i][j], end=' ')
         print()
     number = 0
-    coords = [ ]
+    coords = []
     while number < len(word):
         for i in range(len(square)):
-            for j in range(len(square[ i ])):
-                if (len(square[ i ][ j ])) == 1:
-                    if word[ number ] == square[ i ][ j ]:
-                        coords.append([ i, j ])
+            for j in range(len(square[i])):
+                if (len(square[i][j])) == 1:
+                    if word[number] == square[i][j]:
+                        coords.append([i, j])
                         continue
                 else:
-                    for n in range(0, len(square[ i ][ j ])):
-                        if word[ number ] == square[ i ][ j ][ n ]:
-                            coords.append([ i, j ])
+                    for n in range(0, len(square[i][j])):
+                        if word[number] == square[i][j][n]:
+                            coords.append([i, j])
                             continue
         number += 1
     if len(coords) == 0:
         return None
     else:
-        new_coords = [ ]
+        new_coords = []
         cipher = ''
         for i in range(0, len(coords), 2):
             if len(coords) - 1 == i:
                 break
-            new_coords.append([ coords[ i ][ 0 ], coords[ i + 1 ][ 0 ] ])
+            new_coords.append([coords[i][0], coords[i + 1][0]])
 
         if len(coords) % 2 != 0:
-            new_coords.append([ coords[ len(coords) - 1 ][ 0 ], coords[ 0 ][ 1 ] ])
+            new_coords.append([coords[len(coords) - 1][0], coords[0][1]])
             for i in range(1, len(coords), 2):
                 if len(coords) - 1 == i:
                     break
-                new_coords.append([ coords[ i ][ 1 ], coords[ i + 1 ][ 1 ] ])
+                new_coords.append([coords[i][1], coords[i + 1][1]])
         elif len(coords) % 2 == 0:
             for i in range(0, len(coords), 2):
-                new_coords.append([ coords[ i ][ 1 ], coords[ i + 1 ][ 1 ] ])
+                new_coords.append([coords[i][1], coords[i + 1][1]])
 
         for i in range(0, len(new_coords)):
-            cipher += square[ new_coords[ i ][ 0 ] ][ new_coords[ i ][ 1 ] ]
+            cipher += square[new_coords[i][0]][new_coords[i][1]]
+        print(coords, new_coords)
         return cipher
 
 
 def decomposition(numbers):
-    array = [ ]
+    array = []
     for i in range(2, numbers):
         if numbers % i == 0:
-            array.append([ i, int(numbers / i) ])
+            array.append([i, int(numbers / i)])
     if len(array) == 0:
         return None
     else:
-        return array[ int((len(array) - 1) / 2) ]
+        return array[int((len(array) - 1) / 2)]
 
 
 def square_generator(alphabet, power, coord):
     i, j, number = 0, 0, 0
 
-    square = [ ]
+    square = []
     if len(alphabet) > power:
-        for i in range(0, coord[ 0 ]):
-            square.append([ ])
-            for j in range(0, coord[ 1 ]):
-                square[ i ].append(alphabet[ number ])
+        for i in range(0, coord[0]):
+            square.append([])
+            for j in range(0, coord[1]):
+                square[i].append(alphabet[number])
                 number = number + 1
         for i in range(len(square) - 1, -1, -1):
-            for j in range(len(square[ i ]) - 1, -1, -1):
+            for j in range(len(square[i]) - 1, -1, -1):
 
                 if len(alphabet) - number == 0:
                     break
                 else:
-                    square[ i ][ j ] += alphabet[ number ]
+                    square[i][j] += alphabet[number]
                     number += 1
         while len(alphabet) - number > 0:
             for i in range(len(square) - 1, -1, -1):
-                for j in range(len(square[ i ]) - 1, -1, -1):
+                for j in range(len(square[i]) - 1, -1, -1):
                     if len(alphabet) - number == 0:
                         break
                     else:
-                        square[ i ][ j ] += alphabet[ number ]
+                        square[i][j] += alphabet[number]
                         number += 1
         return square
 
     elif len(alphabet) <= power:
-        for i in range(0, coord[ 0 ]):
-            square.append([ ])
-            for j in range(0, coord[ 1 ]):
+        for i in range(0, coord[0]):
+            square.append([])
+            for j in range(0, coord[1]):
                 if number < len(alphabet):
-                    square[ i ].append(alphabet[ number ])
+                    square[i].append(alphabet[number])
                     number = number + 1
                 else:
-                    break
-            if len(alphabet) != power:
-                if len(square) < coord[ 0 ]:
-                    for i in range(0, len(square) - coord[ 0 ]):
-                        square.append([ ])
-                        if len(square[ len(square) - 1 + i ]) < coord[ 1 ]:
-                            square[ i ].append([ ])
+                    square[i].append(' ')
+                    print(square)
+            # if len(alphabet) != power:
+            #     print(square)
+            #     if len(square) < coord[0]:
+            #         for i in range(0, len(square) - coord[0]):
+            #             square.append([])
+            #
+            #         for i in range(0, coord[0]):
+            #             for j in range(0, coord[1]):
+            #                 print(i, j, coord[1], square)
+            #                 if len(square[i]) < coord[1]:
+            #                     square[i].append(' ')
         print(square)
         return square
 
