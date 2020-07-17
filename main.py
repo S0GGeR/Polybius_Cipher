@@ -27,7 +27,6 @@ def i_op():
 
 
 def polybius_cipher(square, word, op):
-
     number = 0
     coords = [ ]
     while number < len(word):
@@ -62,7 +61,6 @@ def polybius_cipher(square, word, op):
         elif op == 2:
             for coordinate in coords:
                 if coordinate[ 0 ] == 0:
-                    print(len(square) - 1, coordinate[ 1 ], square[ 4 ][ 2 ])
                     if square[ len(square) - 1 ][ coordinate[ 1 ] ] == " ":
                         i = 0
                         while square[ len(square) - 1 - i ][ coordinate[ 1 ] ] == " ":
@@ -73,9 +71,8 @@ def polybius_cipher(square, word, op):
                 else:
                     coordinate[ 0 ] -= 1
             for i in range(0, len(word)):
-                print(cipher, word, len(word), i)
                 cipher += square[ coords[ i ][ 0 ] ][ coords[ i ][ 1 ] ]
-                print(cipher, word, len(word), i)
+
             return cipher
 
 
@@ -128,8 +125,6 @@ def square_generator(alphabet, power, coord):
                 else:
                     square[ i ].append(' ')
 
-
-
         return square
 
 
@@ -143,7 +138,7 @@ def application_start():
         for i in range(len(polybius_square)):
             for j in range(len(polybius_square[ i ])):
                 new_square += (polybius_square[ i ][ j ] + ' ')
-            new_square +='\n'
+            new_square += '\n'
         ui.textBrowser.setText(new_square)
         ui.textBrowser_2.setText(result)
 
@@ -164,4 +159,3 @@ ui.power.editingFinished.connect(i_power)
 ui.pushButton.clicked.connect(application_start)
 
 sys.exit(app.exec_())
-
