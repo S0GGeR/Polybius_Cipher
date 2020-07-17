@@ -27,10 +27,7 @@ def i_op():
 
 
 def polybius_cipher(square, word, op):
-    for i in range(len(square)):
-        for j in range(len(square[ i ])):
-            print(square[ i ][ j ], end=' ')
-        print()
+
     number = 0
     coords = [ ]
     while number < len(word):
@@ -130,19 +127,24 @@ def square_generator(alphabet, power, coord):
                     number = number + 1
                 else:
                     square[ i ].append(' ')
-                    print(square)
 
-        print(square)
+
+
         return square
 
 
 def application_start():
     global alphabet, power, op, message
+    new_square = ''
     if alphabet != '' and power != 0 and op != 0 and message != '':
         coord = decomposition(power)
         polybius_square = square_generator(alphabet, power, coord)
         result = polybius_cipher(polybius_square, message, op)
-        ui.textBrowser.setText(str(polybius_square))
+        for i in range(len(polybius_square)):
+            for j in range(len(polybius_square[ i ])):
+                new_square += (polybius_square[ i ][ j ] + ' ')
+            new_square +='\n'
+        ui.textBrowser.setText(new_square)
         ui.textBrowser_2.setText(result)
 
 
@@ -151,10 +153,10 @@ Dialog = QtWidgets.QDialog()
 ui = Ui_Dialog()
 ui.setupUi(Dialog)
 Dialog.show()
-alphabet = ''
+alphabet = ui.alphabet.text().lower()
 op = 0
-message = ''
-power = 0
+message = ui.message.text().lower()
+power = int(ui.power.text())
 ui.buttonGroup.buttonClicked.connect(i_op)
 ui.alphabet.editingFinished.connect(i_alph)
 ui.message.editingFinished.connect(i_message)
